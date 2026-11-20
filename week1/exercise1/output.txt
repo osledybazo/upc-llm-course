@@ -1,0 +1,32 @@
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+======================================================================
+Week 1 · Exercise 1 — tokenizers, locally
+======================================================================
+
+[1] Load a tokenizer and count tokens
+  loading tokenizer: gpt2 …
+  text : "The model never sees the letters in strawberry."
+  tokens with gpt2: 9
+
+[2] The multilingual penalty (same paragraph, two languages)
+  English          : 38 tokens
+  your language    : 63 tokens
+  multilingual penalty = (mine - en) / en = +65.8%
+  → record this number in your report.
+
+[3] Two tokenizers vs four kinds of code
+  loading tokenizer: bert-base-uncased …
+
+  input                       gpt2   bert-base-uncased
+  ----------------------------------------------------
+  python function               26                  22
+  JSON blob                     36                  45
+  regex-heavy line              41                  44
+  whitespace-heavy              20                   5
+
+  → for each row, write ONE sentence: where do the two disagree
+    most, and why might that be? (put it in your report)
+
+======================================================================
+Done. Now write the report and push it to your course repo.
+======================================================================

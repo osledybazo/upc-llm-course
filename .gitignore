@@ -1,0 +1,11 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+# not mine: course materials / handouts / local tooling
+ludo-engsoft/
+.engram/
+w1-ex1-4.pdf
+.env
+run.log
