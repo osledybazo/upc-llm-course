@@ -1,7 +1,7 @@
 # Week 1 · Exercises 1–4 — Report
 
 **Student:** Osledy Bazó<br>
-**Repository:** [REPO LINK, exactly as on Artemis]
+**Repository:** https://github.com/osledybazo/upc-llm-course
 
 **Machine used for all exercises:** Apple MacBook Pro, M1 Pro chip, 32 GB unified memory, macOS 14 (Sonoma). CPU-only for Exercises 1–2 (Hugging Face `transformers`); Ollama 0.40.16 for Exercises 3–4.
 
