@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset='utf-8'><title>W1 Ex5 Report</title><style>body{font-family:-apple-system,Helvetica,Arial,sans-serif;font-size:10.5pt;line-height:1.45;max-width:800px;margin:auto;color:#111}
+h1{font-size:20pt;margin-bottom:4px}h2{font-size:15pt;border-bottom:1px solid #ccc;padding-bottom:3px;margin-top:28px;page-break-before:auto}
+h3{font-size:11.5pt;margin-top:16px}pre{background:#f5f5f5;padding:8px;border-radius:4px;white-space:pre-wrap;word-break:break-word;font-size:8.5pt}
+code{font-family:Menlo,monospace;font-size:9pt}table{border-collapse:collapse;margin:8px 0}td,th{border:1px solid #bbb;padding:4px 8px;font-size:9.5pt;vertical-align:top}
+th{background:#eee}hr{border:0;border-top:1px solid #ddd;margin:20px 0}img{max-width:100%;border:1px solid #ccc;border-radius:4px}</style></head><body><h1>Week 1 · Exercise 5 — EASY-CHATGPT</h1>
+<p><strong>Student:</strong> Osledy Bazó<br>
+<strong>Partner:</strong> none (solo)<br>
+<strong>Repository:</strong> https://github.com/osledybazo/upc-llm-course (code in <code>week1/exercise5/</code>)</p>
+<hr />
+<h2>EASY-CHATGPT running</h2>
+<p><img alt="EASY-CHATGPT: chat on the left, context view on the right" src="ex5-screenshot.png" /></p>
+<p>A three-turn conversation with <code>ministral-3:14b</code> (local Ollama), served by <code>docker compose up</code> on <strong>http://localhost:6661</strong>:</p>
+<ol>
+<li><strong>Streaming:</strong> a Python prime-checker. The reply types out token by token, and the code block and nested lists render as Markdown.</li>
+<li><strong>Baseline (no streaming):</strong> "What is my name and what am I studying?" The model answers correctly. It remembers because the browser re-sends the whole history every turn.</li>
+<li><strong>Vision:</strong> an attached image with "What colour is this image?" The model answers "solid red".</li>
+</ol>
+<p>The <strong>context view</strong> on the right shows the exact JSON the FastAPI proxy sent to the model, including the system prompt and every previous turn. It also shows the token usage that came back. Prompt tokens climb every turn (53 → 340 → 385) because each request carries the whole conversation.</p>
+<h2>Which model drove the coding agent, and why</h2>
+<p>There are two models involved, doing different jobs:</p>
+<ul>
+<li><strong>Coding agent: Claude Code with Claude Opus 5.5.</strong> This model wrote the code. I used it because the handout says a coding agent is only as good as the model behind it, and a frontier model handles a multi-file project (backend, frontend, Docker) reliably. It also tested its own work: it ran the server locally, then in Docker, then drove a real browser through a full conversation.</li>
+<li><strong>Model inside the chat: <code>ministral-3:14b</code> on local Ollama.</strong> This is the model EASY-CHATGPT talks to. It's free, runs offline on my M1 Pro, and can read images, so it covers the vision version. Switching to a cloud model only means editing the three <code>LLM_*</code> lines in <code>.env</code>.</li>
+</ul>
+<h2>One thing that went wrong, caught and fixed</h2>
+<p><strong>The first version had no favicon and no chart legend.</strong> During the end-to-end browser test, the console reported a <code>404 Not Found</code>. The browser was asking for <code>/favicon.ico</code> and the server didn't have one. The token bar chart also used two colours without saying which was <em>prompt</em> and which was <em>completion</em>. Both were fixed: an inline favicon in <code>index.html</code> and a colour legend next to "Tokens per turn". The re-test showed no console errors.</p>
+<p><strong>Something I noticed while using it.</strong> I asked it to compare FastAPI, Flask and Django in a table. The first table appeared as raw <code>| … |</code> text in a grey box instead of a formatted table. The renderer wasn't broken: the model had wrapped its table inside a <code>```</code> code fence, so the page correctly showed it as code. The second table in the same answer rendered fine. The app shows exactly what the model sends, so if the output looks wrong, check the model's raw output (visible in the context view) before blaming the code.</p>
+<h2>What I'd want it to do next</h2>
+<p>I'd want it to stop being just a chat box and act: call tools (search, run code, read files) and decide by itself which to use. That would turn the proxy into an agent.</p></body></html>

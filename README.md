@@ -7,4 +7,5 @@ Osledy Bazó
 - `week1/exercise3` — Run a model locally (Ollama, ministral-3:14b)
 - `week1/exercise4` — Call the LLM from code
 - `week1/exercise5` — EASY-CHATGPT: FastAPI proxy + vanilla JS chat (streaming, vision, context view)
-- `week1/report/W1-Ex1-4_Osledy_Bazo.pdf` — the delivered report
+- `week1/report/W1-Ex1-4_Osledy_Bazo.pdf` — the delivered report (Ex1–4)
+- `week1/report/W1-Ex5_Osledy_Bazo.pdf` — the delivered report (Ex5)
