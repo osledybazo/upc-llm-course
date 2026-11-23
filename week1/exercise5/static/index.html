@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EASY-CHATGPT</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
+</head>
+<body>
+  <header>
+    <h1>EASY-CHATGPT</h1>
+    <span id="model" class="pill">…</span>
+    <label class="mode">
+      Mode
+      <select id="mode">
+        <option value="stream" selected>Streaming (SSE)</option>
+        <option value="baseline">Baseline (no streaming)</option>
+      </select>
+    </label>
+    <button id="reset" type="button">New chat</button>
+  </header>
+
+  <main>
+    <section id="chat">
+      <div id="messages">
+        <p class="empty">Ask anything. Replies render as Markdown. Attach an image if your model has vision.</p>
+      </div>
+      <form id="composer">
+        <div id="attachment" hidden>
+          <img id="preview" alt="attached image">
+          <button type="button" id="clear-image" title="Remove image">×</button>
+        </div>
+        <div class="row">
+          <label class="attach" title="Attach image">
+            📎<input type="file" id="image" accept="image/*" hidden>
+          </label>
+          <textarea id="input" rows="2" placeholder="Message… (Enter to send, Shift+Enter for newline)"></textarea>
+          <button id="send" type="submit">Send</button>
+        </div>
+      </form>
+    </section>
+
+    <aside id="context">
+      <h2>Context view</h2>
+      <p class="hint">What the proxy sent to the model on the last turn, and the token usage that came back.</p>
+
+      <h3>Tokens per turn <span class="muted"><i class="key p"></i>prompt <i class="key c"></i>completion</span></h3>
+      <div id="bars"></div>
+      <table id="usage">
+        <thead><tr><th>#</th><th>prompt</th><th>completion</th><th>total</th><th>mode</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <h3>Last request <span id="msgcount" class="muted"></span></h3>
+      <pre id="request">—</pre>
+    </aside>
+  </main>
+
+  <script src="/static/vendor/marked.min.js"></script>
+  <script src="/static/vendor/purify.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

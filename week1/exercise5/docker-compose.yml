@@ -1,0 +1,10 @@
+services:
+  easy-chatgpt:
+    build: .
+    env_file: .env
+    ports:
+      - "6661:6661"          # host:container -> http://localhost:6661
+    extra_hosts:
+      # lets the container reach Ollama on the host as host.docker.internal (needed on Linux; free on Mac/Windows)
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
