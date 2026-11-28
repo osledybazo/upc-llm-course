@@ -1,0 +1,12 @@
+services:
+  easy-assistant:
+    build: .
+    env_file: .env
+    ports:
+      - "6662:6662"          # host:container -> http://localhost:6662
+    volumes:
+      - ./data:/srv/data     # assistants.json lives on the host, survives rebuilds
+    extra_hosts:
+      # lets the container reach Ollama on the host as host.docker.internal (needed on Linux; free on Mac/Windows)
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

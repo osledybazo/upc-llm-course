@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EASY-ASSISTANT</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+</head>
+<body>
+  <header>
+    <h1>EASY-ASSISTANT</h1>
+    <span id="model" class="pill">…</span>
+    <label class="mode">
+      Mode
+      <select id="mode">
+        <option value="stream" selected>Streaming (SSE)</option>
+        <option value="baseline">Baseline (no streaming)</option>
+      </select>
+    </label>
+    <button id="reset" type="button">New chat</button>
+  </header>
+
+  <main>
+    <!-- ───────── assistants ───────── -->
+    <aside id="assistants">
+      <div class="side-head">
+        <h2>Assistants</h2>
+        <button id="new-assistant" type="button">+ New</button>
+      </div>
+      <ul id="assistant-list"></ul>
+
+      <form id="assistant-form" hidden>
+        <h3 id="form-title">New assistant</h3>
+        <label>Name
+          <input id="f-name" required maxlength="100" placeholder="e.g. Acme Robotics helper">
+        </label>
+        <label>System prompt
+          <textarea id="f-system" rows="3"></textarea>
+        </label>
+        <label>Prompt template <span class="muted">must contain <code>{context}</code> and <code>{user_input}</code></span>
+          <textarea id="f-template" rows="10" spellcheck="false"></textarea>
+        </label>
+        <label>Document <span class="muted">one plain-text file (.txt, .md…)</span>
+          <input id="f-file" type="file" accept=".txt,.md,.markdown,.csv,.json,.log,text/plain">
+        </label>
+        <p id="f-current-doc" class="muted"></p>
+        <p id="form-error" class="error-text" hidden></p>
+        <div class="form-actions">
+          <button type="submit" id="f-save" class="primary">Save</button>
+          <button type="button" id="f-cancel">Cancel</button>
+          <button type="button" id="f-delete" class="danger" hidden>Delete</button>
+        </div>
+      </form>
+    </aside>
+
+    <!-- ───────── chat ───────── -->
+    <section id="chat">
+      <div id="chat-head">
+        <strong id="chat-title">No assistant selected</strong>
+        <span id="chat-doc" class="muted"></span>
+        <button id="edit-assistant" type="button" hidden>Edit</button>
+      </div>
+      <div id="messages">
+        <p class="empty">Create an assistant, upload a text file, and ask questions about it.</p>
+      </div>
+      <form id="composer">
+        <div class="row">
+          <textarea id="input" rows="2" placeholder="Ask about the document… (Enter to send, Shift+Enter for newline)" disabled></textarea>
+          <button id="send" type="submit" disabled>Send</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ───────── context view ───────── -->
+    <aside id="context">
+      <h2>Context view</h2>
+      <p class="hint">What was actually sent to the model on the last turn, and the tokens it cost.
+        The whole document is pasted into the prompt on <em>every</em> turn.</p>
+
+      <h3>Tokens per turn <span class="muted"><i class="key p"></i>prompt <i class="key c"></i>completion</span></h3>
+      <div id="bars"></div>
+      <table id="usage">
+        <thead><tr><th>#</th><th>question chars</th><th>prompt</th><th>completion</th><th>total</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <h3>Filled-in prompt <span id="filled-stats" class="muted"></span></h3>
+      <p class="hint">The template with <mark class="ctx">{context}</mark> = the whole file and <mark class="usr">{user_input}</mark> = your message.</p>
+      <pre id="filled">—</pre>
+
+      <details>
+        <summary>Full request JSON <span id="msgcount" class="muted"></span></summary>
+        <pre id="request">—</pre>
+      </details>
+    </aside>
+  </main>
+
+  <script src="/static/vendor/marked.min.js"></script>
+  <script src="/static/vendor/purify.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
